@@ -1,0 +1,66 @@
+---
+
+- name: Add repositories for buster: main contrib non-frees
+  apt_repository:
+    repo: 'deb http://http.debian.net/debian buster main contrib non-free'
+    state: present
+    update_cache: yes
+
+- name: Install base packages
+  apt:
+    name="{{ pkgs }}"
+    state="present"
+    update_cache=True
+    install_recommends=False
+  vars:
+    pkgs:
+    - aptitude
+    - python3-psutil
+    - cryptsetup
+    - pv
+    - vim
+    - laptop-mode-tools
+    - hdparm
+    - sdparm
+    - acpid
+
+- name: Install firmwares
+  apt:
+    name="{{ pkgs }}"
+    state="present"
+    update_cache=True
+    install_recommends=False
+  vars:
+    pkgs:
+    - amd64-microcode
+    - intel-microcode
+    - firmware-linux-nonfree
+    - firmware-misc-nonfree
+    - firmware-linux-free
+    - firmware-linux
+    - firmware-atheros
+    - firmware-brcm80211
+    - firmware-intel-sound
+    - firmware-iwlwifi
+    - firmware-libertas
+    - firmware-ralink
+    - firmware-realtek
+
+- name: Swiss keyboard settings
+  lineinfile:
+    regexp: ^{{ item | regex_replace('=.*', '=')}}
+    line: "{{ item }}"
+    dest: /etc/default/keyboard
+  with_items:
+    - XKBLAYOUT="ch"
+    - XKBVARIANT="fr"
+    - XKBOPTIONS="terminate:ctrl_alt_bks
+
+- name: Remove brltty (causes troubles with USB-Uart cables)
+  apt:
+    name="{{ pkgs }}"
+    state="absent"
+  vars:
+    pkgs:
+    - brltty
+
