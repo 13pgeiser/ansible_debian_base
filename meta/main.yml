@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: ansible_role_debian_base
+  role_name: ansible_buster_base
   author: Pascal Geiser
   description: Install bare minimum + non-free firmwares.
   license: license MIT

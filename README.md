@@ -1,6 +1,6 @@
-# Debian base
+# Buster base
 
-Configure non-free apt repository and install firmwares.
+Configure non-free apt repository and install firmwares on debian buster
 
 ## License
 
