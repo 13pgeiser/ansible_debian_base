@@ -54,7 +54,7 @@
   with_items:
     - XKBLAYOUT="ch"
     - XKBVARIANT="fr"
-    - XKBOPTIONS="terminate:ctrl_alt_bks
+    - XKBOPTIONS="terminate:ctrl_alt_bks"
 
 - name: Remove brltty (causes troubles with USB-Uart cables)
   apt:
