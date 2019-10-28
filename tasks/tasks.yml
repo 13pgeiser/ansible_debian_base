@@ -1,5 +1,12 @@
 ---
 
+- name: Print informations
+  debug:
+    msg:
+      - "ansible_host={{ ansible_host }}"
+      - "ansible_architecture={{ ansible_architecture }}"
+      - "ansible_os_family={{ ansible_os_family }}"
+
 - name: Add repositories for buster -> main contrib non-frees
   apt_repository:
     repo: 'deb http://http.debian.net/debian buster main contrib non-free'
@@ -24,7 +31,7 @@
     - sdparm
     - acpid
 
-- name: Install firmwares
+- name: Install microcode
   apt:
     name="{{ pkgs }}"
     state="present"
@@ -34,6 +41,16 @@
     pkgs:
     - amd64-microcode
     - intel-microcode
+  when: ansible_architecture == "x86_64"
+
+- name: Install firmwares
+  apt:
+    name="{{ pkgs }}"
+    state="present"
+    update_cache=True
+    install_recommends=False
+  vars:
+    pkgs:
     - firmware-linux-nonfree
     - firmware-misc-nonfree
     - firmware-linux-free
@@ -55,6 +72,7 @@
     - XKBLAYOUT="ch"
     - XKBVARIANT="fr"
     - XKBOPTIONS="terminate:ctrl_alt_bks"
+  when: ansible_host != "chromebook"
 
 - name: Remove brltty (causes troubles with USB-Uart cables)
   apt:
