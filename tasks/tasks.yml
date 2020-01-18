@@ -22,6 +22,7 @@
   vars:
     pkgs:
     - aptitude
+    - python3-pip
     - python3-psutil
     - cryptsetup
     - pv
