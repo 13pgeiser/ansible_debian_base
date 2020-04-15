@@ -77,6 +77,27 @@
     - XKBOPTIONS="terminate:ctrl_alt_bks"
   when: ansible_host != "chromebook"
 
+- name: select default locale
+  debconf:
+    name: locales
+    question: locales/default_environment_locale
+    value: en_IN
+    vtype: select
+  notify:
+    - rebuild locales database
+
+- name: /etc/locale.gen
+  lineinfile:
+    dest: /etc/locale.gen
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "{{ item.state }}"
+  with_items:
+    - { regexp: '^#? ?en_IN UTF-8', line: 'en_IN UTF-8', state: present }
+    - { regexp: '^#? ?en_US.UTF-8 UTF-8', line: 'en_US.UTF-8 UTF-8', state: present }
+  notify:
+    - rebuild locales database
+
 - name: Remove brltty (causes troubles with USB-Uart cables)
   apt:
     name="{{ pkgs }}"
