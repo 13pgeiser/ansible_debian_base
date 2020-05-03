@@ -3,9 +3,21 @@
 - name: Print informations
   debug:
     msg:
-      - "ansible_host={{ ansible_host }}"
-      - "ansible_architecture={{ ansible_architecture }}"
-      - "ansible_os_family={{ ansible_os_family }}"
+      - "ansible_host                       = {{ ansible_host }}"
+      - "ansible_architecture               = {{ ansible_architecture }}"
+      - "ansible_os_family                  = {{ ansible_os_family }}"
+      - "ansible_processor                  = {{ ansible_processor }}"
+      - "ansible_bios_version               = {{ ansible_bios_version }}"
+      - "ansible_bios_date                  = {{ ansible_bios_date }}"
+      - "ansible_date_time                  = {{ ansible_date_time }}"
+      - "ansible_distribution               = {{ ansible_distribution }}"
+      - "ansible_distribution_major_version = {{ ansible_distribution_major_version }}"
+      - "ansible_lsb                        = {{ ansible_lsb }}"
+      - "ansible_machine                    = {{ ansible_machine }}"
+      - "ansible_kernel                     = {{ ansible_kernel }}"
+      - "ansible_memtotal_mb                = {{ ansible_memtotal_mb }}"
+      - "ansible_memfree_mb                 = {{ ansible_memfree_mb }}"
+      - "ansible_selinux                    = {{ ansible_selinux }}"
 
 - name: Add repositories for buster -> main contrib non-frees
   apt_repository:
