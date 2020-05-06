@@ -78,6 +78,10 @@
     - firmware-ralink
     - firmware-realtek
 
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+
 - name: Swiss keyboard settings
   lineinfile:
     regexp: "^{{ item | regex_replace('=.*', '=') }}"
