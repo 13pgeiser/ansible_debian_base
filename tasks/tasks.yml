@@ -56,8 +56,6 @@
       - "ansible_kernel                     = {{ ansible_kernel }}"
       - "ansible_memtotal_mb                = {{ ansible_memtotal_mb }}"
       - "ansible_memfree_mb                 = {{ ansible_memfree_mb }}"
-      - "ansible_selinux                    = {{ ansible_selinux.status }}"
-
 
 - name: Install microcode
   apt:
