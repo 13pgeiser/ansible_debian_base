@@ -1,5 +1,14 @@
 ---
 
+- name: set apt proxy
+  template:
+    src: proxy.j2
+    dest: /etc/apt/apt.conf.d/proxy
+    owner: root
+    group: root
+    mode: 0644
+  when: apt_cache is defined
+
 - name: Add repositories for buster -> main contrib non-frees
   apt_repository:
     repo: 'deb http://http.debian.net/debian buster main contrib non-free'
