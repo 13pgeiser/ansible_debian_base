@@ -1,5 +1,9 @@
 ---
 
+- name: check if we run precisely debian
+  fail: msg="Unsupported distribution"
+  when: ansible_distribution != 'Debian'
+
 - name: set apt proxy
   template:
     src: proxy.j2
@@ -14,6 +18,14 @@
     repo: 'deb http://http.debian.net/debian buster main contrib non-free'
     state: present
     update_cache: yes
+  when: ansible_distribution_major_version == '10'
+
+- name: Add repositories for bullseye -> main contrib non-frees
+  apt_repository:
+    repo: 'deb http://http.debian.net/debian bullseye main contrib non-free'
+    state: present
+    update_cache: yes
+  when: ansible_distribution_major_version == '11'
 
 - name: Install base packages
   apt:
@@ -38,10 +50,12 @@
     - neofetch
 
 - name: Neofetch
-  shell: "neofetch --stdout"
+  command: "neofetch --stdout"
   register: neofetch
+  changed_when: false
 
-- debug:
+- name: Print neofetch information
+  debug:
     msg: "{{ neofetch.stdout.split('\n') }}"
     verbosity: 2
 
